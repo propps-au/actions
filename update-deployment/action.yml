@@ -1,0 +1,15 @@
+name: "Create Deployment"
+description: "Create and track a deployment."
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+  deployment:
+    description: "Output from @propps/create-deployment-action"
+    required: true
+  state:
+    description: "Deployment state"
+    required: true
+runs:
+  using: "node12"
+  main: "dist/index.js"

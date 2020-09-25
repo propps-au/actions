@@ -1,0 +1,23 @@
+{
+  "name": "@propps/actions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "wsrun -c build",
+    "package": "wsrun -c package"
+  },
+  "workspaces": {
+    "packages": [
+      "create-deployment",
+      "update-deployment"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2",
+    "wsrun": "^5.2.1"
+  }
+}
