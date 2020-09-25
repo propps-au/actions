@@ -1,0 +1,16 @@
+name: "Create Deployment"
+description: "Create and track a deployment."
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+  workflow-ref:
+    description: "Workflow ref"
+  workflow:
+    description: "Workflow specifier"
+    required: true
+  inputs:
+    description: "Inputs (as JSON)"
+runs:
+  using: "node12"
+  main: "dist/index.js"
