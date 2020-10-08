@@ -15,6 +15,7 @@ async function run() {
       production_environment: !!core
         .getInput("environment", { required: true })
         .match(/production/i),
+      required_contexts: [],
     });
 
     if ("id" in res1.data) {
