@@ -1,0 +1,18 @@
+name: "Download artifact"
+description: "Create and track a deployment."
+inputs:
+  run_id:
+    description: "GitHub Actions run id"
+    required: true
+  artifact:
+    description: "Artifact name"
+    required: true
+  token:
+    description: "GitHub token"
+    required: true
+  path:
+    description: "Extract path"
+    default: "."
+runs:
+  using: "node12"
+  main: "dist/index.js"
