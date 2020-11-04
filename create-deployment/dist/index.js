@@ -46,7 +46,7 @@ function run() {
             });
             const res1 = yield octokit.repos.createDeployment(Object.assign(Object.assign({}, github_1.context.repo), { ref: core.getInput("ref", { required: true }), environment: core.getInput("environment", { required: true }), auto_merge: false, production_environment: !!core
                     .getInput("environment", { required: true })
-                    .match(/production/i) }));
+                    .match(/production/i), required_contexts: [] }));
             if ("id" in res1.data) {
                 core.saveState("deployment-id", res1.data.id);
             }
