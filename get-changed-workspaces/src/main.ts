@@ -35,6 +35,7 @@ async function run() {
     core.setOutput("changed-workspaces", result);
   } catch (err) {
     core.setFailed(err.message);
+    throw err;
   }
 }
 
