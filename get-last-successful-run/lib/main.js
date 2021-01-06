@@ -58,13 +58,13 @@ function run() {
 run();
 function findLatestSuccessfulWorkflowRunInHistory(octokit, workflowId) {
     return __awaiter(this, void 0, void 0, function* () {
+        const { stdout: branch } = yield execa_1.default("git", ["branch", "--show-current"]);
         let page = 0;
         let limit = 100;
-        core.info("Branch: " + github_1.context.ref);
         let res;
         do {
             // assumes these are listed from most recent to least
-            res = yield octokit.actions.listWorkflowRuns(Object.assign(Object.assign({ workflow_id: workflowId }, github_1.context.repo), { status: "success", branch: github_1.context.ref, event: "push", per_page: limit, page }));
+            res = yield octokit.actions.listWorkflowRuns(Object.assign(Object.assign({ workflow_id: workflowId }, github_1.context.repo), { status: "success", branch, per_page: limit, page }));
             for (const workflowRun of res.data.workflow_runs) {
                 const sha = workflowRun.head_sha;
                 core.info("Check " + sha);

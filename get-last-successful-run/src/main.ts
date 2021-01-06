@@ -40,10 +40,10 @@ async function findLatestSuccessfulWorkflowRunInHistory(
   octokit: Octokit,
   workflowId: number
 ): Promise<WorkflowRun | null> {
+  const { stdout: branch } = await execa("git", ["branch", "--show-current"]);
+
   let page = 0;
   let limit = 100;
-
-  core.info("Branch: " + context.ref);
 
   let res: ListWorkflowRunsResult;
   do {
@@ -52,8 +52,7 @@ async function findLatestSuccessfulWorkflowRunInHistory(
       workflow_id: workflowId,
       ...context.repo,
       status: "success" as any,
-      branch: context.ref,
-      event: "push",
+      branch,
       per_page: limit,
       page,
     });
