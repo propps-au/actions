@@ -29,6 +29,7 @@ async function run() {
     }
 
     core.setOutput("run", workflowRun);
+    core.setOutput("sha", workflowRun?.head_sha || null);
   } catch (err) {
     core.setFailed(err.message);
   }

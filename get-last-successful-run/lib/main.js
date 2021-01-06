@@ -49,6 +49,7 @@ function run() {
                 core.info("None found. Output null.");
             }
             core.setOutput("run", workflowRun);
+            core.setOutput("sha", (workflowRun === null || workflowRun === void 0 ? void 0 : workflowRun.head_sha) || null);
         }
         catch (err) {
             core.setFailed(err.message);
