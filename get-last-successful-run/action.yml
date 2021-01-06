@@ -1,0 +1,9 @@
+name: "Get Last Successful Run"
+description: "Get information about this workflow's most recent successful run."
+inputs:
+  token:
+    description: "Github token."
+    required: true
+runs:
+  using: "node14"
+  main: "dist/index.js"

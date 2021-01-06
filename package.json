@@ -12,7 +12,10 @@
     "packages": [
       "create-deployment",
       "dispatch-workflow",
-      "update-deployment"
+      "update-deployment",
+      "get-changed-workspaces",
+      "get-affected-workspaces",
+      "get-last-successful-run"
     ]
   },
   "devDependencies": {

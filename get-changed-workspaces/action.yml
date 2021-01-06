@@ -1,0 +1,9 @@
+name: "Get Changed Workspaces"
+description: "Find which workspaces have been modified since a certain commit. Works for Yarn 2 repositories."
+inputs:
+  since:
+    description: "SHA of commit to detect changes from."
+    required: true
+runs:
+  using: "node14"
+  main: "dist/index.js"

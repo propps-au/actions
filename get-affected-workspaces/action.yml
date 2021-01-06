@@ -1,0 +1,12 @@
+name: "Get Affected Workspaces"
+description: "Find all workspaces affected by changes to a set of workspaces. Works for Yarn 2 repositories."
+inputs:
+  workspaces:
+    description: "List of workspaces specified by their package name. Space separated."
+    required: true
+  include-dependencies:
+    description: "Whether to include workspaced depended on by the input workspaces."
+    required: true
+runs:
+  using: "node14"
+  main: "dist/index.js"
