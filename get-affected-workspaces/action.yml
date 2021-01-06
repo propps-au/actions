@@ -8,5 +8,5 @@ inputs:
     description: "Whether to include workspaced depended on by the input workspaces."
     required: true
 runs:
-  using: "node14"
+  using: "node12"
   main: "dist/index.js"
