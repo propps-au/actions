@@ -61,6 +61,7 @@ function run() {
             const result = changedWorkspaces
                 .map((workspace) => getWorkspacePackageName(workspace))
                 .filter((item) => !!item.trim());
+            core.info(result.join(" "));
             core.setOutput("changed-workspaces", result);
         }
         catch (err) {

@@ -65,6 +65,7 @@ function run() {
                 ...dependentWorkspaces,
                 ...(includeDependencies ? dependencies : []),
             ]));
+            core.info(result.join(" "));
             core.setOutput("affected-workspaces", result);
         }
         catch (err) {

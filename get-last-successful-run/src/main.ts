@@ -13,10 +13,20 @@ async function run() {
       run_id: context.runId,
     });
 
+    core.info("Finding most recent successful workflow run for this workflow.");
+
     const workflowRun = await findLatestSuccessfulWorkflowRunInHistory(
       octokit,
       res1.data.workflow_id
     );
+
+    if (workflowRun) {
+      core.info(
+        "Found run " + workflowRun.id + " on commit " + workflowRun.head_sha
+      );
+    } else {
+      core.info("None found. Output null.");
+    }
 
     core.setOutput("run", workflowRun);
   } catch (err) {
@@ -30,8 +40,10 @@ async function findLatestSuccessfulWorkflowRunInHistory(
   octokit: Octokit,
   workflowId: number
 ): Promise<WorkflowRun | null> {
-  let page = 1;
+  let page = 0;
   let limit = 100;
+
+  core.info("Branch: " + context.ref);
 
   let res: ListWorkflowRunsResult;
   do {
@@ -48,6 +60,7 @@ async function findLatestSuccessfulWorkflowRunInHistory(
 
     for (const workflowRun of res.data.workflow_runs) {
       const sha = workflowRun.head_sha;
+      core.info("Check " + sha);
       try {
         // only accept commits that are ancestors of this one
         await execa("git", ["merge-base", "--is-ancestor", sha, "HEAD"]);

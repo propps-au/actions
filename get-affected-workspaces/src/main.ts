@@ -56,6 +56,7 @@ async function run() {
       ])
     );
 
+    core.info(result.join(" "));
     core.setOutput("affected-workspaces", result);
   } catch (err) {
     core.setFailed(err.message);

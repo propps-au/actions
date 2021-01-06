@@ -48,7 +48,14 @@ function run() {
             const token = core.getInput("token", { required: true });
             const octokit = github_1.getOctokit(token);
             const res1 = yield octokit.actions.getWorkflowRun(Object.assign(Object.assign({}, github_1.context.repo), { run_id: github_1.context.runId }));
+            core.info("Finding most recent successful workflow run for this workflow.");
             const workflowRun = yield findLatestSuccessfulWorkflowRunInHistory(octokit, res1.data.workflow_id);
+            if (workflowRun) {
+                core.info("Found run " + workflowRun.id + " on commit " + workflowRun.head_sha);
+            }
+            else {
+                core.info("None found. Output null.");
+            }
             core.setOutput("run", workflowRun);
         }
         catch (err) {
@@ -59,14 +66,16 @@ function run() {
 run();
 function findLatestSuccessfulWorkflowRunInHistory(octokit, workflowId) {
     return __awaiter(this, void 0, void 0, function* () {
-        let page = 1;
+        let page = 0;
         let limit = 100;
+        core.info("Branch: " + github_1.context.ref);
         let res;
         do {
             // assumes these are listed from most recent to least
             res = yield octokit.actions.listWorkflowRuns(Object.assign(Object.assign({ workflow_id: workflowId }, github_1.context.repo), { status: "success", branch: github_1.context.ref, event: "push", per_page: limit, page }));
             for (const workflowRun of res.data.workflow_runs) {
                 const sha = workflowRun.head_sha;
+                core.info("Check " + sha);
                 try {
                     // only accept commits that are ancestors of this one
                     yield execa_1.default("git", ["merge-base", "--is-ancestor", sha, "HEAD"]);
