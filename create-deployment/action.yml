@@ -14,5 +14,5 @@ outputs:
   deployment:
     description: "Deployment data used by other deployment actions"
 runs:
-  using: "node12"
+  using: "node14"
   main: "dist/index.js"
