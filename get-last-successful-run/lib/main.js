@@ -58,6 +58,7 @@ function run() {
 }
 run();
 function findLatestSuccessfulWorkflowRunInHistory(octokit, workflowId) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const { stdout: branch } = yield execa_1.default("git", ["branch", "--show-current"]);
         let page = 0;
@@ -75,10 +76,11 @@ function findLatestSuccessfulWorkflowRunInHistory(octokit, workflowId) {
                     return workflowRun;
                 }
                 catch (err) {
-                    if (err.exitCode === 128) {
+                    if (err.exitCode === 128 || ((_a = err.stderr) === null || _a === void 0 ? void 0 : _a.match(/not a valid commit name/i))) {
                         // commit not found
                     }
                     else {
+                        core.warning(err);
                         throw err;
                     }
                 }

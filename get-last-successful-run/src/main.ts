@@ -66,9 +66,13 @@ async function findLatestSuccessfulWorkflowRunInHistory(
         await execa("git", ["merge-base", "--is-ancestor", sha, "HEAD"]);
         return workflowRun;
       } catch (err) {
-        if (err.exitCode === 128) {
+        if (
+          err.exitCode === 128 ||
+          err.stderr?.match(/not a valid commit name/i)
+        ) {
           // commit not found
         } else {
+          core.warning(err);
           throw err;
         }
       }
