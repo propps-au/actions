@@ -76,7 +76,11 @@ function findLatestSuccessfulWorkflowRunInHistory(octokit, workflowId) {
                     return workflowRun;
                 }
                 catch (err) {
-                    if (err.exitCode === 128 || ((_a = err.stderr) === null || _a === void 0 ? void 0 : _a.match(/not a valid commit name/i))) {
+                    if (err.stderr) {
+                        core.info(err.stderr);
+                    }
+                    if (err.exitCode === 1 ||
+                        (err.exitCode === 128 && ((_a = err.stderr) === null || _a === void 0 ? void 0 : _a.match(/not a valid commit name/i)))) {
                         // commit not found
                     }
                     else {
